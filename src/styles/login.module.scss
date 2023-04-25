@@ -1,0 +1,35 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom, #ffffff, #d57ba5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .paper {
+    height: 480px;
+    width: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #bd8dc9, #9ca7e1);
+
+    form {
+      width: 450px;
+      height: 450px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+
+      h3 {
+        font-weight: 500;
+        font-size: larger;
+      }
+      .Link{
+        font-weight: 700;
+        
+      }
+    }
+  }
+}
