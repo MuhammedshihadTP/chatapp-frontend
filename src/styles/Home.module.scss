@@ -1,11 +1,7 @@
-.main_container {
+.App{
+  background-color: #DDDEDD;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  // background: #23242a;
-
-  button {
-    margin: 10px;
-  }
 }

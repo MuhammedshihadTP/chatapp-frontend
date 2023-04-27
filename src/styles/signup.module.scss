@@ -10,12 +10,14 @@
   .box_content {
     width: 480px;
     height: 500px;
-    background: transparent;
+    // background: transparent;
     box-shadow: inset ;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(to bottom, #bd8dc9, #9ca7e1);
+    border-radius: 20px;
+
+    // background: linear-gradient(to bottom, #bd8dc9, #9ca7e1);
   }
   form {
     width: 450px;

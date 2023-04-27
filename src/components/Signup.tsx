@@ -4,11 +4,14 @@ import { Button, Paper, TextField } from "@mui/material";
 import Link from "next/link";
 import { useFormik } from "formik";
 import { signupValidationSchema } from "@/validation/validation";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Signup() {
-  const onSubmit = () => {
-    console.log("submited");
-  };
+  const router = useRouter();
+
   const { values, handleBlur, touched, handleChange, handleSubmit, errors } =
     useFormik({
       initialValues: {
@@ -17,12 +20,24 @@ export default function Signup() {
         password: "",
         confirmpassword: "",
       },
-
       validationSchema: signupValidationSchema,
-      onSubmit,
+      onSubmit: () => {
+        Submit();
+      },
     });
-
-  console.log(errors);
+  const Submit = async () => {
+    try {
+      console.log("submited");
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/signup`,
+        values
+      );
+      console.log(response.status);
+      router.push("/login");
+    } catch (error:any) {
+      toast.error(`Error: ${error.response.data.msg}`);
+    }
+  };
 
   return (
     <div className={style.box}>
@@ -40,10 +55,12 @@ export default function Signup() {
             value={values.name}
             onChange={handleChange}
             onBlur={handleBlur}
+            error={Boolean(errors.name) && touched.name}
+            helperText={errors.name}
           />
-          {errors.name && touched.name && (
+          {/* {errors.name && touched.name && (
             <p className={style.error}>{errors.name}</p>
-          )}
+          )} */}
 
           <TextField
             variant="outlined"
@@ -55,11 +72,11 @@ export default function Signup() {
             value={values.email}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={errors.email && touched.email ? style.input_error : ""}
+            error={Boolean(errors.email) && touched.email}
+            helperText={errors.email}
+            // className={errors.email && touched.email ? style.input_error : ""}
           />
-          {errors.email && touched.email && (
-            <p className={style.error}>{errors.email}</p>
-          )}
+
           <TextField
             variant="outlined"
             label="Password"
@@ -70,10 +87,10 @@ export default function Signup() {
             value={values.password}
             onChange={handleChange}
             onBlur={handleBlur}
+            error={Boolean(errors.password) && touched.password}
+            helperText={errors.password}
           />
-          {errors.password && touched.password && (
-            <p className={style.error}>{errors.password}</p>
-          )}
+
           <TextField
             variant="outlined"
             label="Confirm Password"
@@ -84,10 +101,9 @@ export default function Signup() {
             value={values.confirmpassword}
             onChange={handleChange}
             onBlur={handleBlur}
+            error={Boolean(errors.confirmpassword) && touched.confirmpassword}
+            helperText={errors.confirmpassword}
           />
-          {errors.confirmpassword && touched.confirmpassword && (
-            <p className={style.error}>{errors.confirmpassword}</p>
-          )}
 
           <Button
             variant="contained"
@@ -101,6 +117,9 @@ export default function Signup() {
           </h2>
         </form>
       </Paper>
+      <div>
+        <ToastContainer/>
+      </div>
     </div>
   );
 }
