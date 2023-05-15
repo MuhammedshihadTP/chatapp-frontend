@@ -43,4 +43,32 @@
       font-size: larger;
     }
   }
+
+  @media only screen and (max-width: 768px) {
+    .box {
+      height: 100%;
+    }
+  
+    .box_content {
+      width: 90%;
+      height: 90%;
+    }
+  
+    form {
+      width: 90%;
+      height: 90%;
+    }
+  }
+  
+  @media only screen and (max-width: 576px) {
+    .box_content {
+      width: 80%;
+      height: 80%;
+    }
+  
+    form {
+      width: 80%;
+      height: 80%;
+    }
+  }
 }

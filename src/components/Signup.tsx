@@ -6,8 +6,8 @@ import { useFormik } from "formik";
 import { signupValidationSchema } from "@/validation/validation";
 import axios from "axios";
 import { useRouter } from "next/router";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Signup() {
   const router = useRouter();
@@ -29,12 +29,12 @@ export default function Signup() {
     try {
       console.log("submited");
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/signup`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/signup`,
         values
       );
-      console.log(response.status);
       router.push("/login");
-    } catch (error:any) {
+      console.log(response.status);
+    } catch (error: any) {
       toast.error(`Error: ${error.response.data.msg}`);
     }
   };
@@ -55,8 +55,8 @@ export default function Signup() {
             value={values.name}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={Boolean(errors.name) && touched.name}
-            helperText={errors.name}
+            error={touched.name && Boolean(errors.name) }
+            helperText={ touched.name && errors.name}
           />
           {/* {errors.name && touched.name && (
             <p className={style.error}>{errors.name}</p>
@@ -72,8 +72,8 @@ export default function Signup() {
             value={values.email}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={Boolean(errors.email) && touched.email}
-            helperText={errors.email}
+            error={touched.email && Boolean(errors.email)}
+            helperText={touched.email && errors.email}
             // className={errors.email && touched.email ? style.input_error : ""}
           />
 
@@ -87,8 +87,8 @@ export default function Signup() {
             value={values.password}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={Boolean(errors.password) && touched.password}
-            helperText={errors.password}
+            error={touched.password && Boolean(errors.password)  }
+            helperText={touched.password && errors.password}
           />
 
           <TextField
@@ -101,8 +101,8 @@ export default function Signup() {
             value={values.confirmpassword}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={Boolean(errors.confirmpassword) && touched.confirmpassword}
-            helperText={errors.confirmpassword}
+            error={touched.confirmpassword && Boolean(errors.confirmpassword)}
+            helperText={touched.confirmpassword && errors.confirmpassword}
           />
 
           <Button
@@ -118,7 +118,7 @@ export default function Signup() {
         </form>
       </Paper>
       <div>
-        <ToastContainer/>
+        <ToastContainer />
       </div>
     </div>
   );

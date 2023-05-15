@@ -33,4 +33,22 @@
       }
     }
   }
+  @media (max-width: 768px) {
+    .paper {
+      height: 80%;
+      width: 80%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .paper {
+      height: 90%;
+      width: 90%;
+    }
+    form {
+      height: 90%;
+    }
+  }
 }
+
+

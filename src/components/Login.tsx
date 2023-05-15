@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Socket, io } from "socket.io-client";
 
 import style from "../styles/login.module.scss";
 import { Paper, TextField, Button } from "@mui/material";
@@ -8,8 +9,13 @@ import { loginValidation } from "@/validation/loginvalidation";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { auth } from "@/helpers/auth";
+import {useRouter} from "next/router";
+
+
 
 function Login() {
+  const router= useRouter()
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues: {
@@ -23,14 +29,14 @@ function Login() {
     });
   const Submit = async () => {
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/login`,
-        values
-      );
+      const response = await auth.login(values);
+      if (response.status === 200) {
+       router.push('/')
+      }
       console.log(response);
     } catch (error: any) {
       console.log(error);
-      if (error.response.status == 404 || 401) {
+      if (error.response.status == 404 || 401 || 500) {
         toast.error(`Error: ${error.response.data.msg}`);
         console.log("helo");
       }
@@ -38,6 +44,7 @@ function Login() {
   };
   return (
     <>
+    
       <div className={style.container}>
         <Paper className={style.paper}>
           <form action="" onSubmit={handleSubmit}>
